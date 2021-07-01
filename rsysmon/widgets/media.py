@@ -1,7 +1,6 @@
 """Widgets to display media information."""
 
-import subprocess
-
+from rsysmon.utils import sys_exec
 from rsysmon.widgets import Information
 
 
@@ -11,26 +10,11 @@ def get_song_info() -> tuple[str, str]:
 
     Requires playerctl to be installed.
     """
-    title = (
-        subprocess.Popen(
-            ["playerctl", "metadata", "title"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        .stdout.read()
-        .decode()
-        .strip("\n")
-    )
-    artist = (
-        subprocess.Popen(
-            ["playerctl", "metadata", "artist"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        .stdout.read()
-        .decode()
-        .strip("\n")
-    )
+    try:
+        title = sys_exec(["playerctl", "metadata", "title"]).strip("\n")
+        artist = sys_exec(["playerctl", "metadata", "artist"]).strip("\n")
+    except OSError:
+        title, artist = "", ""
     return (title, artist)
 
 
@@ -38,17 +22,12 @@ def get_lyrics(song_info: tuple[str, str]) -> str:
     """
     Return lyrics for the currently playing song.
 
-    Requires playerctl and clyrics to be installed.
+    Requires clyrics to be installed.
     """
-    lyrics = (
-        subprocess.Popen(
-            ["clyrics", *song_info],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        .stdout.read()
-        .decode()
-    )
+    try:
+        lyrics = sys_exec(["clyrics", *song_info])
+    except OSError:
+        lyrics = ""
     return lyrics
 
 
@@ -65,7 +44,7 @@ class NowPlaying(Information):
         """Initialise parent Information with song information."""
         super().__init__(
             lambda: separator.join(info)
-            if any(info := get_song_info())
+            if all(info := get_song_info())  # Require all info to be present
             else placeholder
         )
 
