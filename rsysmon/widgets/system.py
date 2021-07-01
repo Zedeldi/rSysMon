@@ -1,6 +1,7 @@
 """Widgets to display system information."""
 
 import os
+from datetime import datetime
 
 import psutil
 
@@ -14,6 +15,13 @@ def get_uname() -> str:
         f"Host: {info.nodename}\n"
         f"Kernel: {info.sysname} {info.release} {info.machine}"
     )
+
+
+def get_uptime() -> str:
+    """Return time since system boot."""
+    delta = datetime.now() - datetime.fromtimestamp(psutil.boot_time())
+    uptime = str(delta).split(".")[0]  # Remove decimal
+    return f"Uptime: {uptime}"
 
 
 class Username(Information):
@@ -30,6 +38,14 @@ class SystemInfo(Information):
     def __init__(self) -> None:
         """Initialise parent Information with uname function."""
         super().__init__(get_uname)
+
+
+class Uptime(Information):
+    """Display system uptime since boot."""
+
+    def __init__(self) -> None:
+        """Initialise parent Information with uptime."""
+        super().__init__(get_uptime)
 
 
 class CPUUsage(Usage):

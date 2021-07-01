@@ -9,7 +9,13 @@ from rsysmon.widgets.clock import Clock
 from rsysmon.widgets.disk import DiskUsage, DiskIO
 from rsysmon.widgets.media import NowPlaying, Lyrics
 from rsysmon.widgets.network import NetworkAddress, NetworkIO
-from rsysmon.widgets.system import Username, SystemInfo, CPUUsage, RAMUsage
+from rsysmon.widgets.system import (
+    Username,
+    SystemInfo,
+    Uptime,
+    CPUUsage,
+    RAMUsage,
+)
 
 
 # Constants
@@ -25,6 +31,7 @@ widgets = {
         "System": [
             Username(),
             SystemInfo(),
+            Uptime(),
             CPUUsage(),
             RAMUsage(),
         ],

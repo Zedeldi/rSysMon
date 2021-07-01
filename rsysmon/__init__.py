@@ -18,4 +18,4 @@ def run(
         while True:
             for widget in widgets:
                 widget.update()
-        time.sleep(update_interval)
+            time.sleep(update_interval)
