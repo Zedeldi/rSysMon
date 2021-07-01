@@ -15,6 +15,7 @@ from rsysmon.widgets.system import (
     Uptime,
     CPUUsage,
     RAMUsage,
+    SensorTemperature,
 )
 
 
@@ -33,6 +34,7 @@ widgets = {
             SystemInfo(),
             Uptime(),
             CPUUsage(),
+            SensorTemperature(sensor_name="Core 0", label="CPU "),
             RAMUsage(),
         ],
         "Disk": [
