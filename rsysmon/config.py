@@ -2,7 +2,6 @@
 
 from typing import Any
 
-from py3status.modules.volume_status import Py3status as Py3VolumeStatus
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.text import Text
@@ -53,7 +52,7 @@ widgets: dict[str, Any] = {
         "Media": [
             NowPlaying(),
             Py3statusCompat(
-                Py3VolumeStatus, config={"cache_timeout": UPDATE_INTERVAL}
+                "volume_status", config={"cache_timeout": UPDATE_INTERVAL}
             ),
         ],
     },

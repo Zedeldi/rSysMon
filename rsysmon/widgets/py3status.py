@@ -4,12 +4,23 @@ Widgets to provide compatibility with py3status.
 Requires py3status to be installed.
 """
 
+from importlib import import_module
 from typing import Any, Optional
 
 from py3status.core import Module
 from py3status.module_test import MockPy3statusWrapper
 
 from rsysmon.widgets import Information
+
+
+def get_py3status_class(module_name: str):
+    """
+    Return the Py3status class with name module_name.
+
+    Raise ModuleNotFoundError if py3status is not installed
+    or module_name is invalid.
+    """
+    return import_module(f"py3status.modules.{module_name}").Py3status
 
 
 def get_py3status_module(
@@ -52,8 +63,9 @@ class Py3statusCompat(Information):
     """Provide Information class compatible with py3status modules."""
 
     def __init__(
-        self, module_class, config: Optional[dict[str, Any]] = None
+        self, module_name: str, config: Optional[dict[str, Any]] = None
     ) -> None:
         """Initialise py3status module and parent Information with output."""
+        module_class = get_py3status_class(module_name)
         self._module = get_py3status_module(module_class, config)
         super().__init__(lambda: get_py3status_output(self._module))
