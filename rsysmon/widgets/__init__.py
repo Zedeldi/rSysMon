@@ -1,5 +1,7 @@
 """Collection of generic renderable widgets."""
 
+from typing import Any
+
 from rich.panel import Panel
 from rich.pretty import Pretty
 from rich.progress import Progress, BarColumn
@@ -7,7 +9,9 @@ from rich.text import Text
 from rich.tree import Tree
 
 
-def dict_to_tree(widgets: dict, title: str = "System information") -> Tree:
+def dict_to_tree(
+    widgets: dict[str, list[Any]], title: str = "System information"
+) -> Tree:
     """Walk through dictionary and return Tree instance."""
     tree = Tree(title)
     for title, renderables in widgets.items():
@@ -26,7 +30,7 @@ class Usage(Progress):
         """Initialise progress bar with task."""
         super().__init__(
             "[progress.description]{task.description}",
-            BarColumn(),
+            BarColumn(finished_style="bar.complete"),  # Remove finished style
             "[progress.percentage]{task.percentage:>3.0f}%",
             *args,
             **kwargs,

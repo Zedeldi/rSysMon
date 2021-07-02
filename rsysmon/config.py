@@ -1,5 +1,7 @@
 """rSysMon configuration file."""
 
+from typing import Any
+
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.text import Text
@@ -26,7 +28,7 @@ REFRESH_PER_SECOND = 2
 
 
 # Widgets
-widgets = {
+widgets: dict[str, Any] = {
     "Tree": {
         "General": [Clock()],
         "System": [
