@@ -1,5 +1,7 @@
 """Widgets to monitor disk status."""
 
+from typing import Optional
+
 import human_readable
 import psutil
 
@@ -17,7 +19,7 @@ def get_disk_io() -> str:
 class DiskUsage(Usage):
     """Usage bar indicating used storage space."""
 
-    def __init__(self, mountpoint: str, label: str = None) -> None:
+    def __init__(self, mountpoint: str, label: Optional[str] = None) -> None:
         """
         Initialise parent Usage and create function for mountpoint.
 

@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from py3status.modules.volume_status import Py3status as Py3VolumeStatus
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.text import Text
@@ -11,6 +12,7 @@ from rsysmon.widgets.clock import Clock
 from rsysmon.widgets.disk import DiskUsage, DiskIO
 from rsysmon.widgets.media import NowPlaying, Lyrics
 from rsysmon.widgets.network import NetworkAddress, NetworkIO
+from rsysmon.widgets.py3status import Py3statusCompat
 from rsysmon.widgets.system import (
     Username,
     SystemInfo,
@@ -48,7 +50,12 @@ widgets: dict[str, Any] = {
             NetworkAddress("eno1"),
             NetworkIO(),
         ],
-        "Media": [NowPlaying()],
+        "Media": [
+            NowPlaying(),
+            Py3statusCompat(
+                Py3VolumeStatus, config={"cache_timeout": UPDATE_INTERVAL}
+            ),
+        ],
     },
     "Main": Lyrics(),
 }
