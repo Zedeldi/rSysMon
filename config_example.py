@@ -1,4 +1,12 @@
-"""rSysMon configuration file."""
+"""
+rSysMon configuration file.
+
+Required attributes:
+    UPDATE_INTERVAL - how frequently to update widgets
+    REFRESH_PER_SECOND - passed to the Live object
+    widgets - an iterable of renderable objects
+    layout - a renderable object with widgets
+"""
 
 from typing import Any
 
