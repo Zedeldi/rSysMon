@@ -1,17 +1,38 @@
 """Read configuration and start rSysMon."""
 
 import sys
+from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from typing import NoReturn
 
 from rsysmon import run
-from rsysmon.config import layout, widgets, UPDATE_INTERVAL, REFRESH_PER_SECOND
-from rsysmon.utils import flatten_iter
+from rsysmon.utils import import_abs_path, flatten_iter
 
 
 def main() -> NoReturn:
-    """Parse widgets and start live display."""
-    widget_list = list(flatten_iter(widgets))
-    run(layout, widget_list, UPDATE_INTERVAL, REFRESH_PER_SECOND)
+    """Parse arguments and widgets, then start live display."""
+    parser = ArgumentParser(
+        prog="rsysmon",
+        description="rSysMon - Copyright (C) 2021 Zack Didcott",
+        formatter_class=ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        type=str,
+        default="config_example.py",
+        help="path to configuration file",
+    )
+
+    args = parser.parse_args()
+    config = import_abs_path(args.config)
+
+    widget_list = list(flatten_iter(config.widgets))
+    run(
+        config.layout,
+        widget_list,
+        config.UPDATE_INTERVAL,
+        config.REFRESH_PER_SECOND,
+    )
 
 
 if __name__ == "__main__":
