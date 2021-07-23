@@ -1,11 +1,11 @@
 """Read configuration and start rSysMon."""
 
 import sys
-from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 from typing import NoReturn
 
 from rsysmon import run
-from rsysmon.utils import import_abs_path, flatten_iter
+from rsysmon.utils import flatten_iter, import_abs_path
 
 
 def main() -> NoReturn:
@@ -27,16 +27,16 @@ def main() -> NoReturn:
     config = import_abs_path(args.config)
 
     widget_list = list(flatten_iter(config.widgets))
-    run(
-        config.layout,
-        widget_list,
-        config.UPDATE_INTERVAL,
-        config.REFRESH_PER_SECOND,
-    )
+    try:
+        run(
+            config.layout,
+            widget_list,
+            config.UPDATE_INTERVAL,
+            config.REFRESH_PER_SECOND,
+        )
+    except KeyboardInterrupt:
+        sys.exit(0)
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        sys.exit(0)
+    main()

@@ -5,7 +5,7 @@ from typing import Optional
 import human_readable
 import psutil
 
-from rsysmon.widgets import Usage, Information
+from rsysmon.widgets import Information, Usage
 
 
 def get_disk_io() -> str:

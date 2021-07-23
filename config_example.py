@@ -16,19 +16,18 @@ from rich.text import Text
 
 from rsysmon.widgets import dict_to_tree
 from rsysmon.widgets.clock import Clock
-from rsysmon.widgets.disk import DiskUsage, DiskIO
-from rsysmon.widgets.media import NowPlaying, Lyrics
+from rsysmon.widgets.disk import DiskIO, DiskUsage
+from rsysmon.widgets.media import Lyrics, NowPlaying
 from rsysmon.widgets.network import NetworkAddress, NetworkIO
 from rsysmon.widgets.py3status import Py3statusCompat
 from rsysmon.widgets.system import (
-    Username,
-    SystemInfo,
-    Uptime,
     CPUUsage,
     RAMUsage,
     SensorTemperature,
+    SystemInfo,
+    Uptime,
+    Username,
 )
-
 
 # Constants
 TITLE = "rSysMon - a Rich System Monitor"

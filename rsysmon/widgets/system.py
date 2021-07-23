@@ -7,7 +7,7 @@ from typing import Optional
 
 import psutil
 
-from rsysmon.widgets import Usage, Information
+from rsysmon.widgets import Information, Usage
 
 
 def get_uname() -> str:

@@ -3,7 +3,7 @@
 import importlib.util
 import subprocess
 from types import ModuleType
-from typing import Any, Union, Generator
+from typing import Any, Generator, Union
 
 
 def import_abs_path(path: str, name: str = "module") -> ModuleType:

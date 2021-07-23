@@ -4,7 +4,7 @@ from typing import Any
 
 from rich.panel import Panel
 from rich.pretty import Pretty
-from rich.progress import Progress, BarColumn
+from rich.progress import BarColumn, Progress
 from rich.text import Text
 from rich.tree import Tree
 
