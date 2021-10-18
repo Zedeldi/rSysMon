@@ -55,7 +55,7 @@ class Information(Text):
     def update(self) -> None:
         """Update text to output of function if changed."""
         text = self._function()
-        if self._text[0] == text:
+        if self.plain == text:
             return
         self.truncate(0)
         self.append(text, style=self._style)

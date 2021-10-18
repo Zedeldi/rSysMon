@@ -59,6 +59,6 @@ class Lyrics(Information):
 
     def update(self) -> None:
         """Update lyrics if the song has changed."""
-        if self._song_info != (info := get_song_info()):
+        if self._song_info != (info := get_song_info()) or not self.plain:
             self._song_info = info
             super().update()
